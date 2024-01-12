@@ -6,6 +6,7 @@ public class Order
     public Point PickUp { get; set; }
     public Point DropOff { get; set; }
     
+    
 }
 
 

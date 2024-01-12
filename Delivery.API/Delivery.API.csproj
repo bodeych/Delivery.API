@@ -93,11 +93,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Data\" />
-      <Folder Include="Domain\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\Delivery.API.Application\Delivery.API.Application.csproj" />
     </ItemGroup>
 

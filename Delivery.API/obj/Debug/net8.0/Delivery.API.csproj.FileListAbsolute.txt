@@ -133,3 +133,4 @@
 /Users/bodeych/RiderProjects/Delivery.API/Delivery.API/bin/Debug/net8.0/Delivery.API.Domain.dll
 /Users/bodeych/RiderProjects/Delivery.API/Delivery.API/bin/Debug/net8.0/Delivery.API.Application.pdb
 /Users/bodeych/RiderProjects/Delivery.API/Delivery.API/bin/Debug/net8.0/Delivery.API.Domain.pdb
+/Users/bodeych/RiderProjects/Delivery.API/Delivery.API/obj/Debug/net8.0/Delivery.API.sourcelink.json

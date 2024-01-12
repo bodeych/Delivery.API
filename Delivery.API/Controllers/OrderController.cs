@@ -2,7 +2,7 @@ using Delivery.API.Contracts.Requests.Order;
 using Delivery.API.Contracts.Responses.Order;
 using Microsoft.AspNetCore.Mvc;
 using Delivery.API.Application.Services;
-using Delivery.API.Domain.Entities;
+
 
 namespace Delivery.API.Controllers;
 
@@ -15,6 +15,7 @@ public class OrderController : Controller
     {
         _orderService = orderService;
     }
+    
 
     [HttpGet]
     public IActionResult GetAll()
@@ -36,19 +37,11 @@ public class OrderController : Controller
     
     //post api v1
     [HttpPost]
-    public IActionResult CreateOrder([FromBody] CreateOrderRequest orderRequest)
+    public IActionResult Create([FromBody] CreateOrderRequest orderRequest)
     {
-        var order = new Order
-        {
-            Id = orderRequest.Id,
-            PickUp = orderRequest.PickUp,
-            DropOff = orderRequest.DropOff
-        };
-        if (order.Id != Guid.Empty)
-            order.Id = Guid.NewGuid();
-        
-        
-        _orderService.GetOrders().Add(order);
+        var order = orderRequest;
+        _orderService.CreateOrder();
+        _orderService.GetOrders();
         var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.ToUriComponent()}";
         var locationUrl = $"{baseUrl}/api/{order.Id}";
 

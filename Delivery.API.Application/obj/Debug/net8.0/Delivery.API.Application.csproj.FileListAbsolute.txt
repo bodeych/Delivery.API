@@ -13,3 +13,4 @@
 /Users/bodeych/RiderProjects/Delivery.API/Delivery.API.Application/obj/Debug/net8.0/refint/Delivery.API.Application.dll
 /Users/bodeych/RiderProjects/Delivery.API/Delivery.API.Application/obj/Debug/net8.0/Delivery.API.Application.pdb
 /Users/bodeych/RiderProjects/Delivery.Api/Delivery.API.Application/obj/Debug/net8.0/ref/Delivery.API.Application.dll
+/Users/bodeych/RiderProjects/Delivery.API/Delivery.API.Application/obj/Debug/net8.0/Delivery.API.Application.sourcelink.json
