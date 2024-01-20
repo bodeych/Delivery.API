@@ -42,13 +42,17 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
-            "Microsoft.Extensions.Configuration": {
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[8.0.0, )"
+              "version": "[8.0.1, )"
             },
-            "Microsoft.Extensions.DependencyInjection": {
+            "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[8.0.0, )"
+              "version": "[8.0.1, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[7.1.2, )"
             }
           },
           "imports": [
@@ -124,14 +128,14 @@
         }
       }
     },
-    "/Users/bodeych/RiderProjects/Delivery.API/Delivery.API/Delivery.API.csproj": {
+    "/Users/bodeych/RiderProjects/Delivery.API/Delivery.API.Infrastructure/Delivery.API.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/bodeych/RiderProjects/Delivery.API/Delivery.API/Delivery.API.csproj",
-        "projectName": "Delivery.API",
-        "projectPath": "/Users/bodeych/RiderProjects/Delivery.API/Delivery.API/Delivery.API.csproj",
+        "projectUniqueName": "/Users/bodeych/RiderProjects/Delivery.API/Delivery.API.Infrastructure/Delivery.API.Infrastructure.csproj",
+        "projectName": "Delivery.API.Infrastructure",
+        "projectPath": "/Users/bodeych/RiderProjects/Delivery.API/Delivery.API.Infrastructure/Delivery.API.Infrastructure.csproj",
         "packagesPath": "/Users/bodeych/.nuget/packages/",
-        "outputPath": "/Users/bodeych/RiderProjects/Delivery.API/Delivery.API/obj/",
+        "outputPath": "/Users/bodeych/RiderProjects/Delivery.API/Delivery.API.Infrastructure/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/bodeych/.nuget/NuGet/NuGet.Config"
@@ -162,25 +166,93 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
-            "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": {
+            "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[8.0.0, )"
+              "version": "[8.0.1, )"
             },
-            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
               "target": "Package",
-              "version": "[8.0.0, )"
+              "version": "[8.0.1, )"
             },
-            "Microsoft.AspNetCore.Identity.UI": {
+            "Microsoft.EntityFrameworkCore.Relational": {
               "target": "Package",
-              "version": "[8.0.0, )"
+              "version": "[8.0.1, )"
             },
-            "Microsoft.EntityFrameworkCore.Sqlite": {
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",
               "version": "[8.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.100/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/bodeych/RiderProjects/Delivery.API/Delivery.API/Delivery.API.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/bodeych/RiderProjects/Delivery.API/Delivery.API/Delivery.API.csproj",
+        "projectName": "Delivery.API",
+        "projectPath": "/Users/bodeych/RiderProjects/Delivery.API/Delivery.API/Delivery.API.csproj",
+        "packagesPath": "/Users/bodeych/.nuget/packages/",
+        "outputPath": "/Users/bodeych/RiderProjects/Delivery.API/Delivery.API/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/bodeych/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "/Users/bodeych/RiderProjects/Delivery.API/Delivery.API.Application/Delivery.API.Application.csproj": {
+                "projectPath": "/Users/bodeych/RiderProjects/Delivery.API/Delivery.API.Application/Delivery.API.Application.csproj"
+              },
+              "/Users/bodeych/RiderProjects/Delivery.API/Delivery.API.Infrastructure/Delivery.API.Infrastructure.csproj": {
+                "projectPath": "/Users/bodeych/RiderProjects/Delivery.API/Delivery.API.Infrastructure/Delivery.API.Infrastructure.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[8.0.1, )"
             },
-            "Microsoft.EntityFrameworkCore.Tools": {
+            "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
-              "version": "[8.0.0, )"
+              "version": "[8.0.1, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",

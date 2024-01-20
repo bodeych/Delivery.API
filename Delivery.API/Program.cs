@@ -1,16 +1,46 @@
-using Delivery.API.Application;
 using Delivery.API.Domain;
+using Delivery.API.ServiceCollectionExtensions;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.OpenApi.Models;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(x =>
+{
+    x.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Description = "JWT Authorization header using bearer scheme",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey
+    });
+    
+    x.AddSecurityRequirement(new OpenApiSecurityRequirement()
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                },
+                Scheme = "Bearer",
+                Name = "Bearer",
+                In = ParameterLocation.Header,
 
-builder.Services.AddApplication(builder.Configuration);
+            },
+            new List<string>()
+        }
+    });
+});
+
+builder.Services.AddInfrastructure();
+builder.Services.AddSettings(builder.Configuration);
+builder.Services.AddApplication();
 
 var app = builder.Build();
 
@@ -22,9 +52,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseRouting();
 
 app.UseAuthentication();
+//app.UseAuthorization();
 
 app.MapControllers();
 
