@@ -58,3 +58,4 @@
 /Users/bodeych/RiderProjects/Delivery.API/Delivery.API/bin/Debug/net8.0/Microsoft.Extensions.Identity.Core.dll
 /Users/bodeych/RiderProjects/Delivery.API/Delivery.API/bin/Debug/net8.0/Microsoft.Extensions.Identity.Stores.dll
 /Users/bodeych/RiderProjects/Delivery.API/Delivery.API/bin/Debug/net8.0/Microsoft.Extensions.Options.dll
+/Users/bodeych/RiderProjects/Delivery.API/Delivery.API/bin/Debug/net8.0/BCrypt.Net-Next.dll

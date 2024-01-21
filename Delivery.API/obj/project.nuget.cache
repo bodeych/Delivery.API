@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "jfYRxPVQha9FJb5fgtXu4oDCuDMH39VZKfymi/nsGJ05kVNRbabsPsSNIev+dys/MSMkxl9tps+lrYvx8cQa5A==",
+  "dgSpecHash": "/UphFsy6dwSzF16fSZuwqlzgHlZyAZC9WPTfAOjjWMZEqGf0Nwrt15N2WDmXVNnHiXm6ZUjqFUoC2K2XKqH4wg==",
   "success": true,
   "projectFilePath": "/Users/bodeych/RiderProjects/Delivery.Api/Delivery.API/Delivery.API.csproj",
   "expectedPackageFiles": [
+    "/Users/bodeych/.nuget/packages/bcrypt.net-next/4.0.3/bcrypt.net-next.4.0.3.nupkg.sha512",
     "/Users/bodeych/.nuget/packages/microsoft.aspnetcore.authentication.jwtbearer/8.0.1/microsoft.aspnetcore.authentication.jwtbearer.8.0.1.nupkg.sha512",
     "/Users/bodeych/.nuget/packages/microsoft.aspnetcore.cryptography.internal/8.0.1/microsoft.aspnetcore.cryptography.internal.8.0.1.nupkg.sha512",
     "/Users/bodeych/.nuget/packages/microsoft.aspnetcore.cryptography.keyderivation/8.0.1/microsoft.aspnetcore.cryptography.keyderivation.8.0.1.nupkg.sha512",

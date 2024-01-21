@@ -1,19 +1,22 @@
-using Delivery.API.Application;
 using Delivery.API.Application.Interfaces;
+using Delivery.API.Domain;
 using Delivery.API.Domain.Orders;
 using Delivery.API.Domain.ValueObjects;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+
 
 namespace Delivery.API.Infrastructure;
 
-public class DataContext : DbContext, IDataContext
+public sealed class DataContext : DbContext, IDataContext
 {
-    public DataContext(DbContextOptions<DataContext> options)
-        : base(options)
+    public DataContext(DbContextOptions<DataContext> options) : base(options)
     {
     }
+    
    public DbSet<Order> Orders => Set<Order>();
+   
+   public DbSet<User> Users { get; set; }
    
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -33,40 +33,7 @@ public static class ServiceCollectionExtensions
     
     public static IServiceCollection AddSettings(this IServiceCollection services, IConfiguration configuration)
     {
-            var jwtSettings = new JwtSettings();
-            configuration.Bind(nameof(jwtSettings), jwtSettings);
-            services.AddSingleton(jwtSettings);
-
-            services.AddAuthentication(x =>
-                {
-                    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                    x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-                    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                })
-                .AddJwtBearer(x =>
-                {
-                    x.SaveToken = true;
-                    x.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtSettings.Secret)),
-                        ValidateIssuer = false,
-                        ValidateAudience = false,
-                        RequireExpirationTime = false,
-                        ValidateLifetime = true
-                    };
-                });
-            var tokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtSettings.Secret)),
-                ValidateIssuer = false,
-                ValidateAudience = false,
-                RequireExpirationTime = false,
-                ValidateLifetime = true
-            };
-            services.AddSingleton(tokenValidationParameters);
-
+        
             services.AddScoped<OrderSettings>(_ =>
         {
             var orderSettings = new OrderSettings();
@@ -83,14 +50,6 @@ public static class ServiceCollectionExtensions
 
             return databaseSettings;
         });
-        services.AddScoped<JwtSettings>(_ =>
-        {
-            var jwtSettings = new JwtSettings();
-
-            configuration.GetSection(nameof(JwtSettings)).Bind(jwtSettings);
-
-            return jwtSettings;
-        });
         
         return services;
     }
@@ -100,7 +59,6 @@ public static class ServiceCollectionExtensions
         services.AddScoped<OrderService>();
         services.AddScoped<DistanceCalculator>();
         services.AddScoped<CostCalculator>();
-        services.AddScoped<IdentityService>();
         
         return services;
     }
