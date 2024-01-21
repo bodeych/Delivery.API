@@ -8,7 +8,7 @@ public interface IDataContext
 {
     DbSet<Order> Orders { get; }
     
-    public DbSet<User> Users { get; }
+    DbSet<User> Users { get; set; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }

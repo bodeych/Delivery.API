@@ -24,9 +24,9 @@ public static class ServiceCollectionExtensions
 
             options.UseNpgsql(settings.ConnectionString);
         });
-        services.AddScoped<IDataContext, DataContext>();
-        services.AddIdentityCore<IdentityUser>()
-            .AddEntityFrameworkStores<DataContext>();
+        services.AddScoped<IDataContext>(sp => sp.GetRequiredService<DataContext>());
+        //services.AddIdentityCore<IdentityUser>()
+            //.AddEntityFrameworkStores<DataContext>();
         
         return services;
     }
@@ -59,6 +59,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<OrderService>();
         services.AddScoped<DistanceCalculator>();
         services.AddScoped<CostCalculator>();
+        services.AddScoped<AuthService>();
         
         return services;
     }
