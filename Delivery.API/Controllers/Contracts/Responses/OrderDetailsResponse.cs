@@ -9,7 +9,7 @@ public sealed class OrderDetailsResponse
     [DataMember(Name = "id")]
     public required Guid Id { get; init; }
     [DataMember(Name = "creator_id")]
-    public required Guid CreatorId { get; init; }
+    public required string CreatorId { get; init; }
     [DataMember(Name = "pickup")]
     public required Coordinate Pickup { get; init; }
     [DataMember(Name = "dropoff")]

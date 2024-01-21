@@ -89,7 +89,7 @@ public sealed class OrderService
     
     public sealed class CreateOrderDto
     {
-        public required Guid CreatorId { get; init; }
+        public required string CreatorId { get; init; }
         public required CoordinateDto Pickup { get; init; }
         public required CoordinateDto Dropoff { get; init; }
     }
@@ -97,7 +97,7 @@ public sealed class OrderService
     public sealed class OrderDetailsDto
     {
         public required Guid Id { get; init; }
-        public required Guid CreatorId { get; init; }
+        public required string CreatorId { get; init; }
         public required CoordinateDto Pickup { get; init; }
         public required CoordinateDto Dropoff { get; init; }
         public required int DistanceMeters { get; init; }

@@ -36,8 +36,7 @@ public class AuthService
             Subject = new ClaimsIdentity(new Claim[]
             {
                 new Claim(ClaimTypes.Name, user.UserName),
-                //new Claim(ClaimTypes.GivenName, user.Name),
-                //new Claim(ClaimTypes.Role, user.Role)
+                new Claim("id", user.UserName),
             }),
             IssuedAt = DateTime.UtcNow,
             Issuer = _configuration["JWT:Issuer"],

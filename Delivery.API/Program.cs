@@ -12,7 +12,6 @@ using Microsoft.OpenApi.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddInfrastructure();
 builder.Services.AddSettings(builder.Configuration);
@@ -37,8 +36,7 @@ builder.Services.AddAuthentication(opt =>
             ValidAudience = builder.Configuration["JWT:Audience"]
         };
     });
-builder.Services.AddHealthChecks();
-//builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen(c => {
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
     {

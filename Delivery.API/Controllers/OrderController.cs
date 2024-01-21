@@ -3,6 +3,8 @@ using Delivery.API.Controllers.Contracts.Requests;
 using Delivery.API.Controllers.Contracts.Responses;
 using Delivery.API.Controllers.Contracts.Shared;
 using Delivery.API.Domain;
+using Delivery.API.ServiceCollectionExtensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -19,6 +21,7 @@ public class OrderController : ControllerBase
         _orderService = orderService;
     }
 
+    [Authorize]
     [HttpPost]
     public async Task<IActionResult> CreatorOrder([FromBody] CreateOrderRequest request, CancellationToken cancellationToken)
     {
@@ -42,7 +45,7 @@ public class OrderController : ControllerBase
             var orderDto = new OrderService.CreateOrderDto
             {
                 // TODO Get proper user id from JWT token
-                CreatorId = Guid.NewGuid(),
+                CreatorId = HttpContext.GetIdUser(),
                 Pickup = new OrderService.CoordinateDto
                 {
                     Latitude = request.PickUp.Latitude,

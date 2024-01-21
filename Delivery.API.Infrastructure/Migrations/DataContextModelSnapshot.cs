@@ -30,8 +30,9 @@ namespace Delivery.API.Infrastructure.Migrations
                     b.Property<decimal>("Cost")
                         .HasColumnType("numeric");
 
-                    b.Property<Guid>("CreatorId")
-                        .HasColumnType("uuid");
+                    b.Property<string>("CreatorId")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<int>("Distance")
                         .HasColumnType("integer");
@@ -39,6 +40,27 @@ namespace Delivery.API.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("Delivery.API.Domain.User", b =>
+                {
+                    b.Property<string>("UserName")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("UserName");
+
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Delivery.API.Domain.Orders.Order", b =>
