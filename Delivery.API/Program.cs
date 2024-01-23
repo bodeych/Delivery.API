@@ -40,6 +40,11 @@ builder.Services.AddSwaggerGen(c => {
 
 var app = builder.Build();
 
+app.UseSwaggerUI(options =>
+{
+    options.DisplayRequestDuration();
+});
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
