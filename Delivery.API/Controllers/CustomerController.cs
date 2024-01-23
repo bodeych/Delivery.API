@@ -1,6 +1,7 @@
 using Delivery.API.Application.Services;
 using Delivery.API.Controllers.Contracts.Responses;
 using Delivery.API.Controllers.Contracts.Shared;
+using Delivery.API.ServiceCollectionExtensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
@@ -9,7 +10,7 @@ namespace Delivery.API.Controllers;
 
 [Authorize]
 [ApiController]
-[Route("api/v1/{userId:guid}/orders")]
+[Route("api/v1/orders")]
 public class CustomerController : ControllerBase
 {
     private readonly CustomerService _customerService;
@@ -20,14 +21,9 @@ public class CustomerController : ControllerBase
     }
     
     [HttpGet]
-    public async Task<IActionResult> GetAll(Guid userId, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
     {
-        if (userId == Guid.Empty)
-        {
-            return BadRequest("Requested ID is invalid or empty.");
-        }
-
-        var orders = await _customerService.FindById(userId, cancellationToken);
+        var orders = await _customerService.FindById(HttpContext.GetIdUser(), cancellationToken);
         
         if (orders is null)
         {

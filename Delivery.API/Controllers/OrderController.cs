@@ -43,8 +43,7 @@ public class OrderController : ControllerBase
         {
             var orderDto = new OrderService.CreateOrderDto
             {
-                // TODO Get proper user id from JWT token
-                CreatorId = Guid.Parse(HttpContext.GetIdUser()),
+                CreatorId = HttpContext.GetIdUser(),
                 Pickup = new OrderService.CoordinateDto
                 {
                     Latitude = request.PickUp.Latitude,
@@ -112,7 +111,7 @@ public class OrderController : ControllerBase
             return BadRequest("Requested ID is invalid or empty.");
         }
 
-        var order = await _orderService.DeleteById(orderId, cancellationToken);
+        var order = await _orderService.DeleteById(orderId, HttpContext.GetIdUser(), cancellationToken);
 
         if (order is false)
         {

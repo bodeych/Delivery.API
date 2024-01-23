@@ -68,13 +68,13 @@ public sealed class OrderService
         return detailsDto;
     }
 
-    public async Task<bool> DeleteById(Guid id, CancellationToken cancellationToken)
+    public async Task<bool> DeleteById(Guid id, Guid userId, CancellationToken cancellationToken)
     {
         var order = await _dataContext.Orders
             .AsNoTracking()
             .FirstOrDefaultAsync(x => x.Id == id, cancellationToken: cancellationToken);
 
-        if (order is null)
+        if (order is null || order.UserId != userId)
         {
             return false;
         }
