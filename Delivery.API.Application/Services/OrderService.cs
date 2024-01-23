@@ -1,6 +1,5 @@
 using Delivery.API.Application.Interfaces;
-using Delivery.API.Application.Settings;
-using Delivery.API.Domain.Orders;
+using Delivery.API.Domain.Entities;
 using Delivery.API.Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 
@@ -51,7 +50,7 @@ public sealed class OrderService
         var detailsDto = new OrderDetailsDto
         {
             Id = order.Id,
-            CreatorId = order.CreatorId,
+            CreatorId = order.UserId,
             Pickup = new CoordinateDto
             {
                 Latitude = order.Pickup.Latitude,
@@ -89,7 +88,7 @@ public sealed class OrderService
     
     public sealed class CreateOrderDto
     {
-        public required string CreatorId { get; init; }
+        public required Guid CreatorId { get; init; }
         public required CoordinateDto Pickup { get; init; }
         public required CoordinateDto Dropoff { get; init; }
     }
@@ -97,7 +96,7 @@ public sealed class OrderService
     public sealed class OrderDetailsDto
     {
         public required Guid Id { get; init; }
-        public required string CreatorId { get; init; }
+        public required Guid CreatorId { get; init; }
         public required CoordinateDto Pickup { get; init; }
         public required CoordinateDto Dropoff { get; init; }
         public required int DistanceMeters { get; init; }

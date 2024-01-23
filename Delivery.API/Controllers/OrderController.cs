@@ -2,7 +2,6 @@ using Delivery.API.Application.Services;
 using Delivery.API.Controllers.Contracts.Requests;
 using Delivery.API.Controllers.Contracts.Responses;
 using Delivery.API.Controllers.Contracts.Shared;
-using Delivery.API.Domain;
 using Delivery.API.ServiceCollectionExtensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Delivery.API.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("api/v1/orders")]
 public class OrderController : ControllerBase
@@ -20,8 +20,7 @@ public class OrderController : ControllerBase
     {
         _orderService = orderService;
     }
-
-    [Authorize]
+    
     [HttpPost]
     public async Task<IActionResult> CreatorOrder([FromBody] CreateOrderRequest request, CancellationToken cancellationToken)
     {
@@ -45,7 +44,7 @@ public class OrderController : ControllerBase
             var orderDto = new OrderService.CreateOrderDto
             {
                 // TODO Get proper user id from JWT token
-                CreatorId = HttpContext.GetIdUser(),
+                CreatorId = Guid.Parse(HttpContext.GetIdUser()),
                 Pickup = new OrderService.CoordinateDto
                 {
                     Latitude = request.PickUp.Latitude,
@@ -67,14 +66,10 @@ public class OrderController : ControllerBase
         {
             return BadRequest(e.Message);
         }
-        catch (DomainException e)
-        {
-            return BadRequest(e.Message);
-        }
     }
-
+    
     [HttpGet("{orderId:guid}")]
-    public async Task<IActionResult> FindById([FromRoute] Guid orderId, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetById([FromRoute] Guid orderId, CancellationToken cancellationToken)
     {
         if (orderId == Guid.Empty)
         {
@@ -91,7 +86,7 @@ public class OrderController : ControllerBase
         var orderDetailsResponse = new OrderDetailsResponse
         {
             Id = order.Id,
-            CreatorId = order.CreatorId,
+            UserId = order.CreatorId,
             Pickup = new Coordinate
             {
                 Latitude = order.Pickup.Latitude,
@@ -108,7 +103,7 @@ public class OrderController : ControllerBase
 
         return Ok(orderDetailsResponse);
     }
-
+    
     [HttpDelete("{orderId:guid}")]
     public async Task<IActionResult> DeleteById([FromRoute] Guid orderId, CancellationToken cancellationToken)
     {

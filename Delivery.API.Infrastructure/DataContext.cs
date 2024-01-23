@@ -1,6 +1,5 @@
 using Delivery.API.Application.Interfaces;
-using Delivery.API.Domain;
-using Delivery.API.Domain.Orders;
+using Delivery.API.Domain.Entities;
 using Delivery.API.Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,7 +13,6 @@ public sealed class DataContext : DbContext, IDataContext
     }
     
    public DbSet<Order> Orders => Set<Order>();
-
    public DbSet<User> Users { get; set; }
    
     

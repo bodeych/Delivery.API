@@ -8,8 +8,8 @@ public sealed class OrderDetailsResponse
 {
     [DataMember(Name = "id")]
     public required Guid Id { get; init; }
-    [DataMember(Name = "creator_id")]
-    public required string CreatorId { get; init; }
+    [DataMember(Name = "user_id")]
+    public required Guid UserId { get; init; }
     [DataMember(Name = "pickup")]
     public required Coordinate Pickup { get; init; }
     [DataMember(Name = "dropoff")]

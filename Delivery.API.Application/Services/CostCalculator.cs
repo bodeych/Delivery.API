@@ -1,5 +1,4 @@
 using Delivery.API.Application.Settings;
-using Delivery.API.Domain.Orders;
 using Delivery.API.Domain.ValueObjects;
 
 namespace Delivery.API.Application.Services;

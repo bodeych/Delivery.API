@@ -22,7 +22,7 @@ namespace Delivery.API.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Delivery.API.Domain.Orders.Order", b =>
+            modelBuilder.Entity("Delivery.API.Domain.Entities.Order", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid");
@@ -30,40 +30,45 @@ namespace Delivery.API.Infrastructure.Migrations
                     b.Property<decimal>("Cost")
                         .HasColumnType("numeric");
 
-                    b.Property<string>("CreatorId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<int>("Distance")
                         .HasColumnType("integer");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("Delivery.API.Domain.User", b =>
+            modelBuilder.Entity("Delivery.API.Domain.Entities.User", b =>
                 {
-                    b.Property<string>("UserName")
-                        .HasColumnType("text");
+                    b.Property<Guid>("CreatorId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
+                    b.Property<string>("AccessToken")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Token")
+                    b.Property<string>("RefreshToken")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("UserName");
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("CreatorId");
 
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("Delivery.API.Domain.Orders.Order", b =>
+            modelBuilder.Entity("Delivery.API.Domain.Entities.Order", b =>
                 {
                     b.OwnsOne("Delivery.API.Domain.ValueObjects.Coordinate", "Dropoff", b1 =>
                         {

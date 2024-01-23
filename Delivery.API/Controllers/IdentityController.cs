@@ -1,96 +1,128 @@
-using System.IdentityModel.Tokens.Jwt;
-using Delivery.API.Application;
-using Delivery.API.Domain;
-using Microsoft.AspNetCore.Authorization;
+using Delivery.API.Application.Services;
+using Delivery.API.Controllers.Contracts.Requests;
+using Delivery.API.Controllers.Contracts.Responses;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Delivery.API.Controllers;
 
-    [Route("[controller]/[action]")]
     [ApiController]
+    [Route("api/v1/")]
     public class IdentityControllers : ControllerBase
     {
-        private readonly AuthService _authService;
+        private readonly IdentityService _identityService;
         
-        public IdentityControllers(AuthService authService)
+        public IdentityControllers(IdentityService identityService)
         {
-            _authService = authService;
+            _identityService = identityService;
         }
-
-        // POST: auth/login
-        [AllowAnonymous]
-        [HttpPost]
-        public async Task<IActionResult> Login([FromBody] LoginUser user)
+        
+        [HttpPost("login")]
+        public async Task<IActionResult> LoginUser([FromBody]UserLoginRequest request, CancellationToken cancellationToken)
         {
-            if (String.IsNullOrEmpty(user.UserName))
+            if (request is null)
             {
-                return BadRequest(new { message = "Email address needs to entered" });
-            }
-            else if (String.IsNullOrEmpty(user.Password))
-            {
-                return BadRequest(new { message = "Password needs to entered" });
+                return BadRequest("Request body is invalid or empty.");
             }
 
-            User loggedInUser = await _authService.Login(user.UserName, user.Password);
-
-            if (loggedInUser != null)
+            if (request.Username is null)
             {
-                return Ok(loggedInUser);
+                return BadRequest("Username is invalid or empty.");
             }
 
-            return BadRequest(new { message = "User login unsuccessful" });
+            if (request.Password is null)
+            {
+                return BadRequest("Password is invalid or empty.");
+            }
+
+            var loginDto = new IdentityService.UserLoginDto
+                {
+                    Username = request.Username,
+                    Password = request.Password
+                };
+
+                var loginTokens = await _identityService.Login(loginDto, cancellationToken);
+
+                if (loginTokens is null)
+                {
+                    return BadRequest("Username or Password is invalid");
+                }
+
+                var userLoginResponse = new UserLoginResponse
+                {
+                    AccessToken = loginTokens.AccessToken,
+                    RefreshToken = loginTokens.RefreshToken
+                };
+                return Ok(userLoginResponse);
+            
+            
         }
-
-        // POST: auth/register
-        [AllowAnonymous]
-        [HttpPost]
-        public async Task<IActionResult> Register([FromBody] RegisterUser user, CancellationToken cancellationToken)
+        
+        [HttpPost("registration")]
+        public async Task<IActionResult> Registration([FromBody]UserRegistrationRequest request, CancellationToken cancellationToken)
         {
-            if (String.IsNullOrEmpty(user.UserName))
+            if (request is null)
             {
-                return BadRequest(new { message = "User name needs to entered" });
-            }
-            else if (String.IsNullOrEmpty(user.Password))
-            {
-                return BadRequest(new { message = "Password needs to entered" });
+                return BadRequest("Request body is invalid or empty.");
             }
 
-            User userToRegister = new(user.UserName, user.Password);
-
-            User registeredUser = await _authService.Register(userToRegister, cancellationToken);
-
-            User loggedInUser = await _authService.Login(registeredUser.UserName, user.Password);
-
-            if (loggedInUser != null)
+            if (request.Username is null)
             {
-                return Ok(loggedInUser);
+                return BadRequest("Username is invalid or empty.");
             }
 
-            return BadRequest(new { message = "User registration unsuccessful" });
+            if (request.Password is null)
+            {
+                return BadRequest("Password is invalid or empty.");
+            }
+            
+                var registarionDto = new IdentityService.UserRegistrationDto
+                {
+                    Username = request.Username,
+                    Password = request.Password
+                };
+
+                var registratedUser = await _identityService.Register(registarionDto, cancellationToken);
+                
+                if (registratedUser is false)
+                {
+                    return BadRequest("Username already exists");
+                }
+
+                return Ok("Success");
         }
-
-        // GET: auth/test
-        [Authorize(Roles = "Everyone")]
-        [HttpGet]
-        public IActionResult Test()
+        
+        [HttpPost("refresh")]
+        public async Task<IActionResult> Refresh([FromBody]TokenRefreshRequest request, CancellationToken cancellationToken)
         {
-            string token = Request.Headers["Authorization"];
-
-            if (token.StartsWith("Bearer"))
+            if (request is null)
             {
-                token = token.Substring("Bearer ".Length).Trim();
-            }
-            var handler = new JwtSecurityTokenHandler();
-
-            JwtSecurityToken jwt = handler.ReadJwtToken(token);
-
-            var claims = new Dictionary<string, string>();
-
-            foreach(var claim in jwt.Claims)
-            {
-                claims.Add(claim.Type, claim.Value);
+                return BadRequest("Request body is invalid or empty.");
             }
 
-            return Ok(claims);
+            if (request.AccessToken is null)
+            {
+                return BadRequest("Access Token is invalid or empty.");
+            }
+
+            if (request.RefreshToken is null)
+            {
+                return BadRequest("Refresh Token is invalid or empty.");
+            }
+            
+            var tokensDto = new IdentityService.TokensDto
+            {
+                AccessToken = request.AccessToken,
+                RefreshToken = request.RefreshToken
+            };
+
+            var newToken = await _identityService.Refresh(tokensDto, cancellationToken);
+                
+            if (newToken is null)
+            {
+                return BadRequest("Access/Refresh Token is invalid");
+            }
+
+            return Ok(newToken);
         }
+        
 }

@@ -1,12 +1,9 @@
 using System.Text;
-using Delivery.API.Application;
 using Delivery.API.Application.Interfaces;
 using Delivery.API.Application.Services;
 using Delivery.API.Application.Settings;
-using Delivery.API.Domain;
 using Delivery.API.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
@@ -25,14 +22,15 @@ public static class ServiceCollectionExtensions
             options.UseNpgsql(settings.ConnectionString);
         });
         services.AddScoped<IDataContext>(sp => sp.GetRequiredService<DataContext>());
-        //services.AddIdentityCore<IdentityUser>()
-            //.AddEntityFrameworkStores<DataContext>();
         
         return services;
     }
     
     public static IServiceCollection AddSettings(this IServiceCollection services, IConfiguration configuration)
     {
+        var jwtSettings = new JwtSettings();
+        configuration.Bind(nameof(jwtSettings), jwtSettings);
+        services.AddSingleton(jwtSettings);
         
             services.AddScoped<OrderSettings>(_ =>
         {
@@ -42,6 +40,7 @@ public static class ServiceCollectionExtensions
 
             return orderSettings;
         });
+            
         services.AddScoped<DatabaseSettings>(_ =>
         {
             var databaseSettings = new DatabaseSettings();
@@ -51,6 +50,37 @@ public static class ServiceCollectionExtensions
             return databaseSettings;
         });
         
+        services.AddScoped<JwtSettings>(_ =>
+        {
+            var jwtSettings = new JwtSettings();
+
+            configuration.GetSection(nameof(JwtSettings)).Bind(jwtSettings);
+
+            return jwtSettings;
+        });
+        
+        var tokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtSettings.SecretKey)),
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateLifetime = false
+        };
+        services.AddSingleton(tokenValidationParameters);
+        services.AddAuthentication(opt =>
+            {
+                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(opt =>
+            {   // for development only
+                opt.RequireHttpsMetadata = false;
+                opt.SaveToken = true;
+                opt.TokenValidationParameters = tokenValidationParameters;
+            });
+        
+        
         return services;
     }
     
@@ -59,7 +89,11 @@ public static class ServiceCollectionExtensions
         services.AddScoped<OrderService>();
         services.AddScoped<DistanceCalculator>();
         services.AddScoped<CostCalculator>();
-        services.AddScoped<AuthService>();
+        services.AddScoped<IdentityService>();
+        services.AddScoped<GenerateToken>();
+        services.AddScoped<CustomerService>();
+        services.AddMemoryCache();
+        
         
         return services;
     }
