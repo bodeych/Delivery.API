@@ -1,6 +1,4 @@
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
+using Delivery.API.Application.Dto;
 using Delivery.API.Domain.Entities;
 using Delivery.API.Application.Interfaces;
 using Delivery.API.Application.Settings;
@@ -12,7 +10,7 @@ namespace Delivery.API.Application.Services;
 
 using BCrypt.Net;
 
-public class IdentityService
+public class IdentityService : IIdentityService
 {
     private readonly IDataContext _dataContext;
     private readonly GenerateToken _generateToken;
@@ -97,26 +95,5 @@ public class IdentityService
         };
 
         return tokensDto;
-
-    }
-
-    
-
-    public sealed class UserLoginDto
-    {
-        public required string Username { get; init; }
-        public required string Password { get; init; }
-    }
-    
-    public sealed class UserRegistrationDto
-    {
-        public required string Username { get; init; }
-        public required string Password { get; init; }
-    }
-
-    public sealed class TokensDto
-    {
-        public required string AccessToken { get; init; }
-        public required string RefreshToken { get; init; }
     }
 }

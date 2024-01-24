@@ -1,3 +1,4 @@
+using Delivery.API.Application.Dto;
 using Delivery.API.Application.Services;
 using Delivery.API.Controllers.Contracts.Requests;
 using Delivery.API.Controllers.Contracts.Responses;
@@ -34,7 +35,7 @@ namespace Delivery.API.Controllers;
                 return BadRequest("Password is invalid or empty.");
             }
 
-            var loginDto = new IdentityService.UserLoginDto
+            var loginDto = new UserLoginDto
                 {
                     Username = request.Username,
                     Password = request.Password
@@ -75,7 +76,7 @@ namespace Delivery.API.Controllers;
                 return BadRequest("Password is invalid or empty.");
             }
             
-                var registarionDto = new IdentityService.UserRegistrationDto
+                var registarionDto = new UserRegistrationDto
                 {
                     Username = request.Username,
                     Password = request.Password
@@ -109,7 +110,7 @@ namespace Delivery.API.Controllers;
                 return BadRequest("Refresh Token is invalid or empty.");
             }
             
-            var tokensDto = new IdentityService.TokensDto
+            var tokensDto = new TokensDto
             {
                 AccessToken = request.AccessToken,
                 RefreshToken = request.RefreshToken

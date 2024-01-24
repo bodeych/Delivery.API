@@ -1,10 +1,11 @@
+using Delivery.API.Application.Dto;
 using Delivery.API.Application.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace Delivery.API.Application.Services;
 
-public sealed class CustomerService
+public sealed class CustomerService : ICustomerService
 {
     private readonly IDataContext _dataContext;
     private readonly IMemoryCache _memoryCache;
@@ -15,11 +16,11 @@ public sealed class CustomerService
         _memoryCache = memoryCache;
     }
     
-    public async Task<List<OrderService.OrderDetailsDto>> FindById(Guid id, CancellationToken cancellationToken)
+    public async Task<List<OrderDetailsDto>> FindById(Guid id, CancellationToken cancellationToken)
     {
         var cacheKey = $"Orders_{id}";
 
-        if (_memoryCache.TryGetValue(cacheKey, out List<OrderService.OrderDetailsDto> cachedOrders))
+        if (_memoryCache.TryGetValue(cacheKey, out List<OrderDetailsDto> cachedOrders))
         {
             return cachedOrders;
         }
@@ -34,16 +35,16 @@ public sealed class CustomerService
         }
 
 
-        var detailsDto = orders.Select(x => new OrderService.OrderDetailsDto
+        var detailsDto = orders.Select(x => new OrderDetailsDto
         {
             Id = x.Id,
-            CreatorId = x.UserId,
-            Pickup = new OrderService.CoordinateDto
+            UserId = x.UserId,
+            Pickup = new CoordinateDto
             {
                 Latitude = x.Pickup.Latitude,
                 Longitude = x.Pickup.Longitude
             },
-            Dropoff = new OrderService.CoordinateDto
+            Dropoff = new CoordinateDto
             {
                 Latitude = x.Dropoff.Latitude,
                 Longitude = x.Dropoff.Longitude

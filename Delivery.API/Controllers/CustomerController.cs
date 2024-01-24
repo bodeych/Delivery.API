@@ -33,7 +33,7 @@ public class CustomerController : ControllerBase
         var orderDetailsResponse = orders.Select(x => new OrderDetailsResponse
         {
             Id = x.Id,
-            UserId = x.CreatorId,
+            UserId = x.UserId,
             Pickup = new Coordinate
             {
                 Latitude = x.Pickup.Latitude,

@@ -1,3 +1,4 @@
+using Delivery.API.Application.Dto;
 using Delivery.API.Application.Services;
 using Delivery.API.Controllers.Contracts.Requests;
 using Delivery.API.Controllers.Contracts.Responses;
@@ -41,15 +42,15 @@ public class OrderController : ControllerBase
 
         try
         {
-            var orderDto = new OrderService.CreateOrderDto
+            var orderDto = new CreateOrderDto
             {
-                CreatorId = HttpContext.GetIdUser(),
-                Pickup = new OrderService.CoordinateDto
+                UserId = HttpContext.GetIdUser(),
+                Pickup = new CoordinateDto
                 {
                     Latitude = request.PickUp.Latitude,
                     Longitude = request.PickUp.Longitude
                 },
-                Dropoff = new OrderService.CoordinateDto
+                Dropoff = new CoordinateDto
                 {
                     Latitude = request.DropOff.Latitude,
                     Longitude = request.DropOff.Longitude
@@ -85,7 +86,7 @@ public class OrderController : ControllerBase
         var orderDetailsResponse = new OrderDetailsResponse
         {
             Id = order.Id,
-            UserId = order.CreatorId,
+            UserId = order.UserId,
             Pickup = new Coordinate
             {
                 Latitude = order.Pickup.Latitude,

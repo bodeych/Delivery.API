@@ -1,3 +1,4 @@
+using Delivery.API.Application.Dto;
 using Delivery.API.Application.Interfaces;
 using Delivery.API.Domain.Entities;
 using Delivery.API.Domain.ValueObjects;
@@ -5,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Delivery.API.Application.Services;
 
-public sealed class OrderService
+public sealed class OrderService : IOrderService
 {
     private readonly IDataContext _dataContext;
     private readonly DistanceCalculator _distanceCalculator;
@@ -28,7 +29,7 @@ public sealed class OrderService
 
         var cost = _costCalculator.Calculate(distance);
 
-        var order = Order.Create(dto.CreatorId, pickup, dropoff, distance, cost);
+        var order = Order.Create(dto.UserId, pickup, dropoff, distance, cost);
 
         _dataContext.Orders.Add(order);
         await _dataContext.SaveChangesAsync(cancellationToken);
@@ -50,7 +51,7 @@ public sealed class OrderService
         var detailsDto = new OrderDetailsDto
         {
             Id = order.Id,
-            CreatorId = order.UserId,
+            UserId = order.UserId,
             Pickup = new CoordinateDto
             {
                 Latitude = order.Pickup.Latitude,
@@ -83,29 +84,5 @@ public sealed class OrderService
         await _dataContext.SaveChangesAsync(cancellationToken);
 
         return true;
-    }
-
-    
-    public sealed class CreateOrderDto
-    {
-        public required Guid CreatorId { get; init; }
-        public required CoordinateDto Pickup { get; init; }
-        public required CoordinateDto Dropoff { get; init; }
-    }
-
-    public sealed class OrderDetailsDto
-    {
-        public required Guid Id { get; init; }
-        public required Guid CreatorId { get; init; }
-        public required CoordinateDto Pickup { get; init; }
-        public required CoordinateDto Dropoff { get; init; }
-        public required int DistanceMeters { get; init; }
-        public required decimal Cost { get; init; }
-    }
-
-    public sealed class CoordinateDto
-    {
-        public required double Latitude { get; init; }
-        public required double Longitude { get; init; }
     }
 }
