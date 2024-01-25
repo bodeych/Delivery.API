@@ -1,0 +1,13 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=0558952f_002Db590_002D4be7_002D8288_002D1e673ec390a9/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from OrderTests.cs" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;Or&gt;
+    &lt;ProjectFile&gt;02E28A10-BB71-45F3-A5F7-233F87F6F7FA/d:Entities/f:OrderTests.cs&lt;/ProjectFile&gt;
+    &lt;ProjectFile&gt;02E28A10-BB71-45F3-A5F7-233F87F6F7FA/d:Entities/f:UserTests.cs&lt;/ProjectFile&gt;
+    &lt;ProjectFile&gt;02E28A10-BB71-45F3-A5F7-233F87F6F7FA/d:ValueObjects/f:CoordinateTests.cs&lt;/ProjectFile&gt;
+    &lt;ProjectFile&gt;02E28A10-BB71-45F3-A5F7-233F87F6F7FA/d:ValueObjects/f:DistanceTests.cs&lt;/ProjectFile&gt;
+    &lt;ProjectFile&gt;56D77CBA-C141-467C-B5C5-8A605F2387B9/d:Services/f:DistanceCalculatorTests.cs&lt;/ProjectFile&gt;
+    &lt;ProjectFile&gt;56D77CBA-C141-467C-B5C5-8A605F2387B9/d:Services/f:CostCalculatorTests.cs&lt;/ProjectFile&gt;
+    &lt;ProjectFile&gt;56D77CBA-C141-467C-B5C5-8A605F2387B9/d:Services/f:GenerateTokenTests.cs&lt;/ProjectFile&gt;
+    &lt;ProjectFile&gt;56D77CBA-C141-467C-B5C5-8A605F2387B9/d:Services/f:OrderServiceTests.cs&lt;/ProjectFile&gt;
+  &lt;/Or&gt;
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
