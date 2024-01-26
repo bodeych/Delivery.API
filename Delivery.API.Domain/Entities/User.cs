@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using Delivery.API.Domain.ValueObjects;
 
 namespace Delivery.API.Domain.Entities;
 

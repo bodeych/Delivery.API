@@ -1,8 +1,9 @@
 using System.Text;
-using Delivery.API.Application.Interfaces;
+using Delivery.API.Application.Repositories;
 using Delivery.API.Application.Services;
 using Delivery.API.Application.Settings;
 using Delivery.API.Infrastructure;
+using Delivery.API.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -21,7 +22,6 @@ public static class ServiceCollectionExtensions
 
             options.UseNpgsql(settings.ConnectionString);
         });
-        services.AddScoped<IDataContext>(sp => sp.GetRequiredService<DataContext>());
         
         return services;
     }
@@ -93,6 +93,9 @@ public static class ServiceCollectionExtensions
         services.AddScoped<GenerateToken>();
         services.AddScoped<CustomerService>();
         services.AddMemoryCache();
+        services.AddScoped<IOrderRepository, OrderRepository>();
+        services.AddScoped<ICustomerRepository, CustomerRepository>();
+        services.AddScoped<IIdentityRepository, IdentityRepository>();
         
         
         return services;

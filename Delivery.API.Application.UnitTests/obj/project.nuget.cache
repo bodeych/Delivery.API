@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "V81whPh6Gy2SDxEbYD3+2zf1tnrqco2LezidgWmyyVAvssAsMfS28uWgQddfYqohAaQTs0FRV+2KJJ7t4DJmzQ==",
+  "dgSpecHash": "DCZMA5tXBEXlixOtIlU5IcatAMiyvgz5ZVkUwTkSN7O2TQj0BvuzLUZhOAokldKZ8yI4wk65hOPVaiofwx3Rgw==",
   "success": true,
   "projectFilePath": "/Users/bodeych/RiderProjects/Delivery.Api/Delivery.API.Application.UnitTests/Delivery.API.Application.UnitTests.csproj",
   "expectedPackageFiles": [
@@ -12,7 +12,6 @@
     "/Users/bodeych/.nuget/packages/microsoft.entityframeworkcore/8.0.1/microsoft.entityframeworkcore.8.0.1.nupkg.sha512",
     "/Users/bodeych/.nuget/packages/microsoft.entityframeworkcore.abstractions/8.0.1/microsoft.entityframeworkcore.abstractions.8.0.1.nupkg.sha512",
     "/Users/bodeych/.nuget/packages/microsoft.entityframeworkcore.analyzers/8.0.1/microsoft.entityframeworkcore.analyzers.8.0.1.nupkg.sha512",
-    "/Users/bodeych/.nuget/packages/microsoft.entityframeworkcore.inmemory/8.0.1/microsoft.entityframeworkcore.inmemory.8.0.1.nupkg.sha512",
     "/Users/bodeych/.nuget/packages/microsoft.entityframeworkcore.relational/8.0.1/microsoft.entityframeworkcore.relational.8.0.1.nupkg.sha512",
     "/Users/bodeych/.nuget/packages/microsoft.extensions.apidescription.server/6.0.5/microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
     "/Users/bodeych/.nuget/packages/microsoft.extensions.caching.abstractions/8.0.0/microsoft.extensions.caching.abstractions.8.0.0.nupkg.sha512",

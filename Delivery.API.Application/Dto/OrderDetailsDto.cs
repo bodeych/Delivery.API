@@ -1,5 +1,3 @@
-using Delivery.API.Application.Services;
-
 namespace Delivery.API.Application.Dto;
 
 public sealed class OrderDetailsDto

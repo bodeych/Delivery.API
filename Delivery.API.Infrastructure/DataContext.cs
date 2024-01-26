@@ -1,4 +1,3 @@
-using Delivery.API.Application.Interfaces;
 using Delivery.API.Domain.Entities;
 using Delivery.API.Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
@@ -6,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Delivery.API.Infrastructure;
 
-public sealed class DataContext : DbContext, IDataContext
+public sealed class DataContext : DbContext
 {
     public DataContext(DbContextOptions<DataContext> options) : base(options)
     {

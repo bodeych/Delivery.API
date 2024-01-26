@@ -1,20 +1,19 @@
 using Delivery.API.Application.Dto;
-using Delivery.API.Application.Interfaces;
+using Delivery.API.Application.Repositories;
 using Delivery.API.Domain.Entities;
 using Delivery.API.Domain.ValueObjects;
-using Microsoft.EntityFrameworkCore;
 
 namespace Delivery.API.Application.Services;
 
-public sealed class OrderService : IOrderService
+public sealed class OrderService
 {
-    private readonly IDataContext _dataContext;
+    private readonly IOrderRepository _orderRepository;
     private readonly DistanceCalculator _distanceCalculator;
     private readonly CostCalculator _costCalculator;
 
-    public OrderService(IDataContext dataContext, DistanceCalculator distanceCalculator, CostCalculator costCalculator)
+    public OrderService(IOrderRepository orderRepository, DistanceCalculator distanceCalculator, CostCalculator costCalculator)
     {
-        _dataContext = dataContext;
+        _orderRepository = orderRepository;
         _distanceCalculator = distanceCalculator;
         _costCalculator = costCalculator;
     }
@@ -31,17 +30,14 @@ public sealed class OrderService : IOrderService
 
         var order = Order.Create(dto.UserId, pickup, dropoff, distance, cost);
 
-        _dataContext.Orders.Add(order);
-        await _dataContext.SaveChangesAsync(cancellationToken);
+        await _orderRepository.AddAsync(order, cancellationToken);
 
         return order.Id;
     }
 
     public async Task<OrderDetailsDto?> FindById(Guid id, CancellationToken cancellationToken)
     {
-        var order = await _dataContext.Orders
-            .AsNoTracking()
-            .FirstOrDefaultAsync(x => x.Id == id, cancellationToken: cancellationToken);
+        var order = await _orderRepository.FindByIdAsync(id, cancellationToken);
 
         if (order is null)
         {
@@ -71,17 +67,14 @@ public sealed class OrderService : IOrderService
 
     public async Task<bool> DeleteById(Guid id, Guid userId, CancellationToken cancellationToken)
     {
-        var order = await _dataContext.Orders
-            .AsNoTracking()
-            .FirstOrDefaultAsync(x => x.Id == id, cancellationToken: cancellationToken);
+        var order = await _orderRepository.FindByIdAsync(id, cancellationToken);
 
         if (order is null || order.UserId != userId)
         {
             return false;
         }
-        
-        _dataContext.Orders.Remove(order);
-        await _dataContext.SaveChangesAsync(cancellationToken);
+
+        await _orderRepository.RemoveAsync(order, cancellationToken);
 
         return true;
     }

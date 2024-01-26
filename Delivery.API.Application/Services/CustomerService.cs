@@ -1,22 +1,22 @@
 using Delivery.API.Application.Dto;
-using Delivery.API.Application.Interfaces;
-using Microsoft.EntityFrameworkCore;
+using Delivery.API.Application.Repositories;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Delivery.API.Application.Services;
 
-public sealed class CustomerService : ICustomerService
+public sealed class CustomerService
 {
-    private readonly IDataContext _dataContext;
+    private readonly ICustomerRepository _customerRepository;
     private readonly IMemoryCache _memoryCache;
     
-    public CustomerService(IDataContext dataContext, IMemoryCache memoryCache)
+    public CustomerService(ICustomerRepository customerRepository, IMemoryCache memoryCache)
     {
-        _dataContext = dataContext;
+        _customerRepository = customerRepository;
         _memoryCache = memoryCache;
     }
     
-    public async Task<List<OrderDetailsDto>> FindById(Guid id, CancellationToken cancellationToken)
+    public async Task<List<OrderDetailsDto>?> FindById(Guid id, CancellationToken cancellationToken)
     {
         var cacheKey = $"Orders_{id}";
 
@@ -24,12 +24,11 @@ public sealed class CustomerService : ICustomerService
         {
             return cachedOrders;
         }
-        var orders = await _dataContext.Orders
-            .AsNoTracking()
-            .Where(i => i.UserId == id).ToListAsync();
+
+        var orders = await _customerRepository.FindByIdToListAsync(id);
        
 
-        if (orders is null)
+        if (orders.IsNullOrEmpty())
         {
             return null;
         }

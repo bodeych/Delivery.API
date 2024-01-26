@@ -1,5 +1,3 @@
-using Microsoft.Extensions.Configuration;
-
 namespace Delivery.API.Infrastructure;
 
 public class DatabaseSettings

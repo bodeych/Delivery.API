@@ -4,7 +4,6 @@ using Delivery.API.Controllers.Contracts.Shared;
 using Delivery.API.ServiceCollectionExtensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Memory;
 
 namespace Delivery.API.Controllers;
 

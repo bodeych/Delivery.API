@@ -1,4 +1,3 @@
-using Delivery.API.Application.Interfaces;
 using Delivery.API.Application.Settings;
 using Delivery.API.Domain.ValueObjects;
 
