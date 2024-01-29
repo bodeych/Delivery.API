@@ -9,7 +9,7 @@ namespace Delivery.API.Controllers;
 
 [Authorize]
 [ApiController]
-[Route("api/v1/orders")]
+[Route("api/v1/customer/orders")]
 public class CustomerController : ControllerBase
 {
     private readonly CustomerService _customerService;

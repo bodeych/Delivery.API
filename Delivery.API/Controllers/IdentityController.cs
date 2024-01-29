@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Delivery.API.Controllers;
     
      [ApiController]
-     [Route("api/v1/")]
+     [Route("api/v1/identity/")]
      public class IdentityControllers : ControllerBase
      {
          private readonly IdentityService _identityService;
@@ -123,7 +123,12 @@ namespace Delivery.API.Controllers;
                  return BadRequest("Access/Refresh Token is invalid");
              }
     
-             return Ok(newToken);
+             var tokenResponse = new TokenRefreshResponse
+             {
+                 AccessToken = newToken.AccessToken,
+                 RefreshToken = newToken.RefreshToken
+             };
+             return Ok(tokenResponse);
          }
          
 }

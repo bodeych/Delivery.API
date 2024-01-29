@@ -1,10 +1,4 @@
-using System.Collections.Immutable;
-using System.Text;
-using System.Text.Json.Serialization;
-
 using Delivery.API.ServiceCollectionExtensions;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 
@@ -26,6 +20,7 @@ builder.Services.AddSwaggerGen(c => {
         In = ParameterLocation.Header,
         Description = "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer jhfdkj.jkdsakjdsa.jkdsajk\"",
     });
+    c.SchemaFilter<SwaggerSnakeCaseFilter>();
     c.AddSecurityRequirement(new OpenApiSecurityRequirement {
         {
             new OpenApiSecurityScheme {
@@ -61,5 +56,3 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
-
-public partial class Program { }

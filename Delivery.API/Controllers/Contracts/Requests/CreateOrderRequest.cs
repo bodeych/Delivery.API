@@ -7,7 +7,7 @@ namespace Delivery.API.Controllers.Contracts.Requests;
 public sealed class CreateOrderRequest
 {
     [DataMember(Name = "pickup")]
-    public Coordinate PickUp { get; init; }
+    public Coordinate Pickup { get; init; }
     [DataMember(Name = "dropoff")]
-    public Coordinate DropOff { get; init; }
+    public Coordinate Dropoff { get; init; }
 }

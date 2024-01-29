@@ -10,9 +10,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Delivery.API.Controllers;
 
-//[Authorize]
+[Authorize]
 [ApiController]
-[Route("api/v1/orders")]
+[Route("api/v1/order")]
 public class OrderController : ControllerBase
 {
     private readonly OrderService _orderService;
@@ -30,12 +30,12 @@ public class OrderController : ControllerBase
             return BadRequest("Request body is invalid or empty.");
         }
 
-        if (request.PickUp is null)
+        if (request.Pickup is null)
         {
             return BadRequest("Pickup coordinate is invalid or empty.");
         }
 
-        if (request.DropOff is null)
+        if (request.Dropoff is null)
         {
             return BadRequest("Dropoff coordinate is invalid or empty.");
         }
@@ -47,20 +47,25 @@ public class OrderController : ControllerBase
                 UserId = HttpContext.GetIdUser(),
                 Pickup = new CoordinateDto
                 {
-                    Latitude = request.PickUp.Latitude,
-                    Longitude = request.PickUp.Longitude
+                    Latitude = request.Pickup.Latitude,
+                    Longitude = request.Pickup.Longitude
                 },
                 Dropoff = new CoordinateDto
                 {
-                    Latitude = request.DropOff.Latitude,
-                    Longitude = request.DropOff.Longitude
+                    Latitude = request.Dropoff.Latitude,
+                    Longitude = request.Dropoff.Longitude
                 },
                 
             };
 
             var createdOrderId = await _orderService.Create(orderDto, cancellationToken);
 
-            return Ok(createdOrderId);
+            var orderResponse = new CreateOrderResponse
+            {
+                Id = createdOrderId
+            };
+
+            return Ok(orderResponse);
         }
         catch (ArgumentException e)
         {
