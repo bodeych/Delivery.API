@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Delivery.API.Controllers;
 
-[Authorize]
+//[Authorize]
 [ApiController]
 [Route("api/v1/orders")]
 public class OrderController : ControllerBase

@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using System.Text;
+using System.Text.Json.Serialization;
 
 using Delivery.API.ServiceCollectionExtensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -60,3 +61,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+public partial class Program { }
