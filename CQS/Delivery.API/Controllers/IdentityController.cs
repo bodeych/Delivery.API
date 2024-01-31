@@ -1,5 +1,4 @@
 using Delivery.API.Application.Commands;
-using Delivery.API.Application.Dto;
 using Delivery.API.Controllers.Contracts.Requests;
 using Delivery.API.Controllers.Contracts.Responses;
 using Microsoft.AspNetCore.Mvc;

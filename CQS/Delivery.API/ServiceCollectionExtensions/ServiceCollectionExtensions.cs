@@ -1,10 +1,8 @@
 using System.Text;
-using Delivery.API.Application.Interface;
-using Delivery.API.Application.Repositories;
+using Delivery.API.Application.Interfaces;
 using Delivery.API.Application.Services;
 using Delivery.API.Application.Settings;
 using Delivery.API.Infrastructure;
-using Delivery.API.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -27,6 +25,7 @@ public static class ServiceCollectionExtensions
             options.UseNpgsql(settings.ConnectionString);
         });
         services.AddScoped<IDataContext, DataContext>();
+        services.AddMemoryCache();
         
         return services;
     }
@@ -91,12 +90,7 @@ public static class ServiceCollectionExtensions
     
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
-        services.AddScoped<IdentityService>();
         services.AddScoped<GenerateToken>();
-        services.AddScoped<CustomerService>();
-        services.AddMemoryCache();
-        services.AddScoped<ICustomerRepository, CustomerRepository>();
-        services.AddScoped<IIdentityRepository, IdentityRepository>();
         services.AddControllers().AddNewtonsoftJson(options =>
         {
             options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();

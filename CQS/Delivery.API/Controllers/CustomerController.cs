@@ -1,4 +1,4 @@
-using Delivery.API.Application.Services;
+using Delivery.API.Application.Queries;
 using Delivery.API.Controllers.Contracts.Responses;
 using Delivery.API.Controllers.Contracts.Shared;
 using Delivery.API.ServiceCollectionExtensions;
@@ -15,7 +15,7 @@ public class CustomerController : ControllerBase
 {
     private readonly IMediator _mediator;
 
-    public CustomerController (Mediator mediator)
+    public CustomerController (IMediator mediator)
     {
         _mediator = mediator;
     }
@@ -23,7 +23,12 @@ public class CustomerController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
     {
-        var orders = await _mediator.Send(HttpContext.GetIdUser(), cancellationToken);
+        
+        var idListOrdersQuery = new GetListOrdersQuery
+        {
+            Id = HttpContext.GetIdUser()
+        };
+        var orders = await _mediator.Send(idListOrdersQuery, cancellationToken);
         
         if (orders is null)
         {

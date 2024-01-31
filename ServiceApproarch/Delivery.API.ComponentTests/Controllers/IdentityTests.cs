@@ -142,12 +142,15 @@ public class IdentityTests
         var str = await response.Content.ReadAsStringAsync();
         var loginResponseObj = JsonConvert.DeserializeObject<UserLoginResponse>(str);
     
-        // Assert\
-        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-        Assert.NotNull(loginResponseObj.AccessToken);
-        Assert.NotNull(loginResponseObj.RefreshToken);
-        Assert.Equal(token.AccessToken, loginResponseObj.AccessToken);
-        Assert.Equal(token.RefreshToken, loginResponseObj.RefreshToken);
+        // Assert
+        Assert.Multiple(() =>
+        {
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.NotNull(loginResponseObj.AccessToken);
+            Assert.NotNull(loginResponseObj.RefreshToken);
+            Assert.Equal(token.AccessToken, loginResponseObj.AccessToken);
+            Assert.Equal(token.RefreshToken, loginResponseObj.RefreshToken);
+        });
     }
     
     [Fact]
@@ -256,10 +259,13 @@ public class IdentityTests
         var tokenResponse = JsonConvert.DeserializeObject<TokenRefreshResponse>(str);
     
         // Assert
-        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-        Assert.NotNull(tokenResponse.AccessToken);
-        Assert.NotNull(tokenResponse.RefreshToken);
-        Assert.NotEqual(token.AccessToken, tokenResponse.AccessToken);
+        Assert.Multiple(() =>
+        {
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.NotNull(tokenResponse.AccessToken);
+            Assert.NotNull(tokenResponse.RefreshToken);
+            Assert.NotEqual(token.AccessToken, tokenResponse.AccessToken);
+        });
     }
     
     [Fact]

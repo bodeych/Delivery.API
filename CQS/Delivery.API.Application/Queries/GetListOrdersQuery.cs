@@ -6,7 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Delivery.API.Application.Queries;
 
-public class GetListOrdersQuery : IQuery<List<OrderDetailsDto>?>
+public sealed class GetListOrdersQuery : IQuery<List<OrderDetailsDto>?>
 {
     public required Guid Id { get; init; }
 }
@@ -16,7 +16,7 @@ internal sealed class GetListOrdersQueryHandler : IQueryHandler<GetListOrdersQue
     private readonly IDataContext _dataContext;
     private readonly IMemoryCache _memoryCache;
 
-    public GetListOrdersQueryHandler(IDataContext dataContext, MemoryCache memoryCache)
+    public GetListOrdersQueryHandler(IDataContext dataContext, IMemoryCache memoryCache)
     {
         _dataContext = dataContext;
         _memoryCache = memoryCache;

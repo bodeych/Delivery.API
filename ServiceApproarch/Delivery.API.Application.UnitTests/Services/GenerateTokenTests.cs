@@ -19,16 +19,17 @@ public class GenerateTokenTests
 
         // Act
         var token = generateToken.AccessToken(userId);
-
-        // Assert
-        Assert.NotNull(token);
-
         // Decode the token and verify its claims
         var handler = new JwtSecurityTokenHandler();
         var jwt = handler.ReadToken(token) as JwtSecurityToken;
 
-        Assert.NotNull(jwt);
-        Assert.True(jwt.Claims.Any(claim => claim.Type == "creatorId" && claim.Value == userId.ToString()));
+        // Assert
+        Assert.Multiple(() =>
+        {
+            Assert.NotNull(token);
+            Assert.NotNull(jwt);
+            Assert.True(jwt.Claims.Any(claim => claim.Type == "creatorId" && claim.Value == userId.ToString()));
+        });
     }
     
     [Fact]
@@ -45,7 +46,10 @@ public class GenerateTokenTests
         var refreshToken = generateToken.RefreshToken();
 
         // Assert
-        Assert.NotNull(refreshToken);
-        Assert.NotEmpty(refreshToken);
+        Assert.Multiple(() =>
+        {
+            Assert.NotNull(refreshToken);
+            Assert.NotEmpty(refreshToken);
+        });
     }
 }

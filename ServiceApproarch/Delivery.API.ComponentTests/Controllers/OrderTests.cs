@@ -75,8 +75,11 @@ public class OrderTests
         var orderIdResponse = JsonConvert.DeserializeObject<CreateOrderResponse>(str);
         
         //Assert
-        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-        Assert.NotNull(orderIdResponse);
+        Assert.Multiple(() =>
+        {
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.NotNull(orderIdResponse);
+        });
     }
     
     [Fact]
@@ -192,9 +195,19 @@ public class OrderTests
         
         //Act
         var response = await client.GetAsync($"http://localhost:5139/api/v1/order/{orderIdResponse.Id}");
+        var newStr = await response.Content.ReadAsStringAsync();
+        var order = JsonConvert.DeserializeObject<OrderDetailsResponse>(newStr);
         
         //Assert
-        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        Assert.Multiple(() =>
+        {
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.Equal(orderIdResponse.Id, order.Id);
+            Assert.Equal(createOrderRequest.Pickup.Latitude, order.Pickup.Latitude);
+            Assert.Equal(createOrderRequest.Pickup.Longitude, order.Pickup.Longitude);
+            Assert.Equal(createOrderRequest.Dropoff.Latitude, order.Dropoff.Latitude);
+            Assert.Equal(createOrderRequest.Dropoff.Longitude, order.Dropoff.Longitude);
+        });
     }
     
     [Fact]

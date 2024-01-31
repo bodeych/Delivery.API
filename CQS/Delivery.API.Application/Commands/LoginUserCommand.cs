@@ -1,7 +1,5 @@
 using Delivery.API.Application.Dto;
 using Delivery.API.Application.Interfaces;
-using Delivery.API.Application.Services;
-using Delivery.API.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Delivery.API.Application.Commands;

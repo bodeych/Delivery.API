@@ -28,9 +28,12 @@ public class IdentityServiceTests
         var tokens = await identityService.Login(loginDto, CancellationToken.None);
 
         // Assert
-        Assert.NotNull(tokens);
-        Assert.Equal(tokens.AccessToken, existingUser.AccessToken);
-        Assert.Equal(tokens.RefreshToken, existingUser.RefreshToken);
+        Assert.Multiple(() =>
+        {
+            Assert.NotNull(tokens);
+            Assert.Equal(tokens.AccessToken, existingUser.AccessToken);
+            Assert.Equal(tokens.RefreshToken, existingUser.RefreshToken);
+        });
     }
     
     [Fact]

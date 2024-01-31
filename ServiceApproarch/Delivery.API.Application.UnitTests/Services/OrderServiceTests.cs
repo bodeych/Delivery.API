@@ -70,12 +70,15 @@ namespace Delivery.API.Application.UnitTests.Services;
          var result = await orderService.FindById(order, CancellationToken.None);
          
          // Assert
-         Assert.NotNull(result);
-         Assert.Equal(dto.UserId, result.UserId);
-         Assert.Equal(dto.Pickup.Longitude, result.Pickup.Longitude);
-         Assert.Equal(dto.Pickup.Latitude, result.Pickup.Latitude);
-         Assert.Equal(dto.Dropoff.Longitude, result.Dropoff.Longitude);
-         Assert.Equal(dto.Dropoff.Latitude, result.Dropoff.Latitude);
+         Assert.Multiple(() =>
+         {
+             Assert.NotNull(result);
+             Assert.Equal(dto.UserId, result.UserId);
+             Assert.Equal(dto.Pickup.Longitude, result.Pickup.Longitude);
+             Assert.Equal(dto.Pickup.Latitude, result.Pickup.Latitude);
+             Assert.Equal(dto.Dropoff.Longitude, result.Dropoff.Longitude);
+             Assert.Equal(dto.Dropoff.Latitude, result.Dropoff.Latitude);
+         });
      }
      
      [Fact]

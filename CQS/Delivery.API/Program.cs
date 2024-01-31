@@ -1,4 +1,4 @@
-using Delivery.API.Application.Interface;
+using Delivery.API.Application.Interfaces;
 using Delivery.API.ServiceCollectionExtensions;
 using Microsoft.OpenApi.Models;
 

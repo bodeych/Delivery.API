@@ -16,11 +16,14 @@ public class UserTests
         var user = User.Create(userId, username, password, accessToken, refreshToken);
 
         // Assert
-        Assert.Equal(userId, user.UserId);
-        Assert.Equal(username, user.Username);
-        Assert.Equal(password, user.Password);
-        Assert.Equal(accessToken, user.AccessToken);
-        Assert.Equal(refreshToken, user.RefreshToken);
+        Assert.Multiple(() =>
+        {
+            Assert.Equal(userId, user.UserId);
+            Assert.Equal(username, user.Username);
+            Assert.Equal(password, user.Password);
+            Assert.Equal(accessToken, user.AccessToken);
+            Assert.Equal(refreshToken, user.RefreshToken);
+        });
     }
 
     [Fact]

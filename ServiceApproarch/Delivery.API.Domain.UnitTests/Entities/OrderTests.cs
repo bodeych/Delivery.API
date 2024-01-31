@@ -15,10 +15,13 @@ public class OrderTests
         var order = Order.Create(userId, pickup, dropoff, distance, cost);
 
         // Assert
-        Assert.Equal(userId, order.UserId);
-        Assert.Equal(pickup, order.Pickup);
-        Assert.Equal(dropoff, order.Dropoff);
-        Assert.Equal(distance, order.Distance);
-        Assert.Equal(cost, order.Cost);
+        Assert.Multiple(() =>
+        {
+            Assert.Equal(userId, order.UserId);
+            Assert.Equal(pickup, order.Pickup);
+            Assert.Equal(dropoff, order.Dropoff);
+            Assert.Equal(distance, order.Distance);
+            Assert.Equal(cost, order.Cost);
+        });
     }
 }

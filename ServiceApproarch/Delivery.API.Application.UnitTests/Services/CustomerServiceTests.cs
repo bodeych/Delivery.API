@@ -33,8 +33,11 @@ public class CustomerServiceTests
         var listOrders = await customerService.FindById(userId, CancellationToken.None);
 
         // Assert
-        Assert.NotNull(listOrders);
-        Assert.Equal(2, listOrders.Count);
+        Assert.Multiple(() =>
+        {
+            Assert.NotNull(listOrders);
+            Assert.Equal(2, listOrders.Count);
+        });
     }
     
     [Fact]

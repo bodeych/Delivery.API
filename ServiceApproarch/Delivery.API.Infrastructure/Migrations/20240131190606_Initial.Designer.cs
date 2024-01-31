@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Delivery.API.Infrastructure.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240117195753_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20240131190606_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,26 +25,61 @@ namespace Delivery.API.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Delivery.API.Domain.Orders.Order", b =>
+            modelBuilder.Entity("Delivery.API.Domain.Entities.Order", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<decimal>("Cost")
-                        .HasColumnType("numeric");
-
-                    b.Property<Guid>("CreatorId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("numeric")
+                        .HasColumnName("cost");
 
                     b.Property<int>("Distance")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("distance");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
 
                     b.HasKey("Id");
 
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("Delivery.API.Domain.Orders.Order", b =>
+            modelBuilder.Entity("Delivery.API.Domain.Entities.User", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
+
+                    b.Property<string>("AccessToken")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("access_token");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("password");
+
+                    b.Property<string>("RefreshToken")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("refresh_token");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("username");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Delivery.API.Domain.Entities.Order", b =>
                 {
                     b.OwnsOne("Delivery.API.Domain.ValueObjects.Coordinate", "Dropoff", b1 =>
                         {
