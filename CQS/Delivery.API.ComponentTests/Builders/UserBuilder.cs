@@ -40,7 +40,7 @@ public class UserBuilder
         var jsonContentRegister = new StringContent(JsonConvert.SerializeObject(registrationModel), Encoding.UTF8,
             "application/json");
 
-        var responseRegister = await client.PostAsync("http://localhost:5139/api/v1/identity/registration", jsonContentRegister);
+        var responseRegister = await client.PostAsync("http://localhost:5248/api/v1/identity/registration", jsonContentRegister);
 
         var loginRequest = new UserLoginRequest
         {
@@ -51,7 +51,7 @@ public class UserBuilder
         var jsonContentLogin = new StringContent(JsonConvert.SerializeObject(loginRequest), Encoding.UTF8,
             "application/json");
 
-        var responseLogin = await client.PostAsync("http://localhost:5139/api/v1/identity/login", jsonContentLogin);
+        var responseLogin = await client.PostAsync("http://localhost:5248/api/v1/identity/login", jsonContentLogin);
 
         var str = await responseLogin.Content.ReadAsStringAsync();
         var loginResponseObj = JsonConvert.DeserializeObject<UserLoginResponse>(str);

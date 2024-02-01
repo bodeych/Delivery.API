@@ -1,3 +1,5 @@
+using FluentAssertions;
+
 namespace Delivery.API.ComponentTests.Controllers;
 
 public class CustomerTests
@@ -23,10 +25,10 @@ public class CustomerTests
         var token = await new UserBuilder().WithLogin("1234").WithPassword("1234").Build();
         
         //Act
-        var response = await client.GetAsync($"http://localhost:5139/api/v1/customer/orders");
+        var response = await client.GetAsync($"http://localhost:5248/api/v1/customer/orders");
         
         //Assert
-        Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
+        response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
     }
     
     [Fact]
@@ -41,10 +43,10 @@ public class CustomerTests
         client.DefaultRequestHeaders.Add("Authorization",$"Bearer {token.AccessToken}");
         
         //Act
-        var response = await client.GetAsync($"http://localhost:5139/api/v1/customer/orders");
+        var response = await client.GetAsync($"http://localhost:5248/api/v1/customer/orders");
         
         //Assert
-        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+        response.StatusCode.Should().Be(HttpStatusCode.NotFound);
     }
     
     [Fact]
@@ -73,14 +75,14 @@ public class CustomerTests
         };
     
         var firstOrder = new StringContent(JsonConvert.SerializeObject(createOrderRequest), Encoding.UTF8, "application/json");
-        await client.PostAsync($"http://localhost:5139/api/v1/order", firstOrder);
+        await client.PostAsync($"http://localhost:5248/api/v1/order", firstOrder);
         var secondOrder = new StringContent(JsonConvert.SerializeObject(createOrderRequest), Encoding.UTF8, "application/json");
-        await client.PostAsync($"http://localhost:5139/api/v1/order", secondOrder);
+        await client.PostAsync($"http://localhost:5248/api/v1/order", secondOrder);
         
         //Act
-        var response = await client.GetAsync($"http://localhost:5139/api/v1/customer/orders");
+        var response = await client.GetAsync($"http://localhost:5248/api/v1/customer/orders");
         
         //Assert
-        Assert.NotNull(response);
+        response.Should().NotBeNull();
     }
 }

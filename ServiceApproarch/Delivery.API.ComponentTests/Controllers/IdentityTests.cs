@@ -171,7 +171,7 @@ public class IdentityTests
         // Act
         var response = await client.PostAsync("http://localhost:5139/api/v1/identity/login", jsonContent);
     
-        // Assert\
+        // Assert
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
     }
     
@@ -193,7 +193,7 @@ public class IdentityTests
         // Act
         var response = await client.PostAsync("http://localhost:5139/api/v1/identity/login", jsonContent);
     
-        // Assert\
+        // Assert
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
     }
     
@@ -215,7 +215,7 @@ public class IdentityTests
         // Act
         var response = await client.PostAsync("http://localhost:5139/api/v1/identity/login", jsonContent);
     
-        // Assert\
+        // Assert
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
     }
     
@@ -233,7 +233,7 @@ public class IdentityTests
         // Act
         var response = await client.PostAsync("http://localhost:5139/api/v1/identity/login", jsonContent);
     
-        // Assert\
+        // Assert
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
     }
     

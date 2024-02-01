@@ -1,3 +1,6 @@
+using FluentAssertions;
+using FluentAssertions.Execution;
+
 namespace Delivery.API.ComponentTests.Controllers;
 
 public class IdentityTests
@@ -30,10 +33,10 @@ public class IdentityTests
         var jsonContent = new StringContent(JsonConvert.SerializeObject(registrationModel), Encoding.UTF8, "application/json");
 
         // Act
-        var response = await client.PostAsync("http://localhost:5139/api/v1/identity/registration", jsonContent);
+        var response = await client.PostAsync("http://localhost:5248/api/v1/identity/registration", jsonContent);
 
         // Assert
-        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
     }
     
     [Fact]
@@ -53,10 +56,10 @@ public class IdentityTests
         var jsonContent = new StringContent(JsonConvert.SerializeObject(createRegistrationRequest), Encoding.UTF8, "application/json");
     
         // Act
-        var response = await client.PostAsync("http://localhost:5139/api/v1/identity/registration", jsonContent);
+        var response = await client.PostAsync("http://localhost:5248/api/v1/identity/registration", jsonContent);
     
         // Assert
-        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
     }
     
     [Fact]
@@ -75,10 +78,10 @@ public class IdentityTests
         var jsonContent = new StringContent(JsonConvert.SerializeObject(createRegistrationRequest), Encoding.UTF8, "application/json");
     
         // Act
-        var response = await client.PostAsync("http://localhost:5139/api/v1/identity/registration", jsonContent);
+        var response = await client.PostAsync("http://localhost:5248/api/v1/identity/registration", jsonContent);
     
         // Assert
-        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
     }
     
     [Fact]
@@ -97,10 +100,10 @@ public class IdentityTests
         var jsonContent = new StringContent(JsonConvert.SerializeObject(createRegistrationRequest), Encoding.UTF8, "application/json");
     
         // Act
-        var response = await client.PostAsync("http://localhost:5139/api/v1/identity/registration", jsonContent);
+        var response = await client.PostAsync("http://localhost:5248/api/v1/identity/registration", jsonContent);
     
         // Assert
-        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
     }
     
     [Fact]
@@ -115,10 +118,10 @@ public class IdentityTests
         var jsonContent = new StringContent(JsonConvert.SerializeObject(createRegistrationRequest), Encoding.UTF8, "application/json");
     
         // Act
-        var response = await client.PostAsync("http://localhost:5139/api/v1/identity/registration", jsonContent);
+        var response = await client.PostAsync("http://localhost:5248/api/v1/identity/registration", jsonContent);
     
         // Assert
-        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
     }
     
     [Fact]
@@ -138,16 +141,17 @@ public class IdentityTests
         var jsonContent = new StringContent(JsonConvert.SerializeObject(userLoginRequest), Encoding.UTF8, "application/json");
     
         // Act
-        var response = await client.PostAsync("http://localhost:5139/api/v1/identity/login", jsonContent);
+        var response = await client.PostAsync("http://localhost:5248/api/v1/identity/login", jsonContent);
         var str = await response.Content.ReadAsStringAsync();
         var loginResponseObj = JsonConvert.DeserializeObject<UserLoginResponse>(str);
     
-        // Assert\
-        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-        Assert.NotNull(loginResponseObj.AccessToken);
-        Assert.NotNull(loginResponseObj.RefreshToken);
-        Assert.Equal(token.AccessToken, loginResponseObj.AccessToken);
-        Assert.Equal(token.RefreshToken, loginResponseObj.RefreshToken);
+        // Assert
+        using var scope = new AssertionScope();
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        loginResponseObj.AccessToken.Should().NotBeNullOrEmpty();
+        loginResponseObj.RefreshToken.Should().NotBeNullOrEmpty();
+        loginResponseObj.AccessToken.Should().Be(token.AccessToken);
+        loginResponseObj.RefreshToken.Should().Be(token.RefreshToken);
     }
     
     [Fact]
@@ -166,10 +170,10 @@ public class IdentityTests
         var jsonContent = new StringContent(JsonConvert.SerializeObject(userLoginRequest), Encoding.UTF8, "application/json");
     
         // Act
-        var response = await client.PostAsync("http://localhost:5139/api/v1/identity/login", jsonContent);
+        var response = await client.PostAsync("http://localhost:5248/api/v1/identity/login", jsonContent);
     
-        // Assert\
-        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
     }
     
     [Fact]
@@ -188,10 +192,10 @@ public class IdentityTests
         var jsonContent = new StringContent(JsonConvert.SerializeObject(userLoginRequest), Encoding.UTF8, "application/json");
     
         // Act
-        var response = await client.PostAsync("http://localhost:5139/api/v1/identity/login", jsonContent);
+        var response = await client.PostAsync("http://localhost:5248/api/v1/identity/login", jsonContent);
     
-        // Assert\
-        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
     }
     
     [Fact]
@@ -210,10 +214,10 @@ public class IdentityTests
         var jsonContent = new StringContent(JsonConvert.SerializeObject(userLoginRequest), Encoding.UTF8, "application/json");
     
         // Act
-        var response = await client.PostAsync("http://localhost:5139/api/v1/identity/login", jsonContent);
+        var response = await client.PostAsync("http://localhost:5248/api/v1/identity/login", jsonContent);
     
-        // Assert\
-        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
     }
     
     [Fact]
@@ -228,10 +232,10 @@ public class IdentityTests
         var jsonContent = new StringContent(JsonConvert.SerializeObject(userLoginRequest), Encoding.UTF8, "application/json");
     
         // Act
-        var response = await client.PostAsync("http://localhost:5139/api/v1/identity/login", jsonContent);
+        var response = await client.PostAsync("http://localhost:5248/api/v1/identity/login", jsonContent);
     
-        // Assert\
-        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
     }
     
     [Fact]
@@ -251,15 +255,16 @@ public class IdentityTests
         var jsonContent = new StringContent(JsonConvert.SerializeObject(tokenRequest), Encoding.UTF8, "application/json");
     
         // Act
-        var response = await client.PostAsync("http://localhost:5139/api/v1/identity/refresh", jsonContent);
+        var response = await client.PostAsync("http://localhost:5248/api/v1/identity/refresh", jsonContent);
         var str = await response.Content.ReadAsStringAsync();
         var tokenResponse = JsonConvert.DeserializeObject<TokenRefreshResponse>(str);
     
         // Assert
-        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-        Assert.NotNull(tokenResponse.AccessToken);
-        Assert.NotNull(tokenResponse.RefreshToken);
-        Assert.NotEqual(token.AccessToken, tokenResponse.AccessToken);
+        using var scope = new AssertionScope();
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        tokenResponse.AccessToken.Should().NotBeNullOrEmpty();
+        tokenResponse.RefreshToken.Should().NotBeNullOrEmpty();
+        tokenResponse.AccessToken.Should().NotBe(token.AccessToken);
     }
     
     [Fact]
@@ -278,10 +283,10 @@ public class IdentityTests
         var jsonContent = new StringContent(JsonConvert.SerializeObject(tokenRequest), Encoding.UTF8, "application/json");
     
         // Act
-        var response = await client.PostAsync("http://localhost:5139/api/v1/identity/refresh", jsonContent);
+        var response = await client.PostAsync("http://localhost:5248/api/v1/identity/refresh", jsonContent);
     
         // Assert
-        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
     }
     
     [Fact]
@@ -300,10 +305,10 @@ public class IdentityTests
         var jsonContent = new StringContent(JsonConvert.SerializeObject(tokenRequest), Encoding.UTF8, "application/json");
     
         // Act
-        var response = await client.PostAsync("http://localhost:5139/api/v1/identity/refresh", jsonContent);
+        var response = await client.PostAsync("http://localhost:5248/api/v1/identity/refresh", jsonContent);
     
         // Assert
-        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
     }
     
     [Fact]
@@ -322,10 +327,10 @@ public class IdentityTests
         var jsonContent = new StringContent(JsonConvert.SerializeObject(tokenRequest), Encoding.UTF8, "application/json");
     
         // Act
-        var response = await client.PostAsync("http://localhost:5139/api/v1/identity/refresh", jsonContent);
+        var response = await client.PostAsync("http://localhost:5248/api/v1/identity/refresh", jsonContent);
     
         // Assert
-        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
     }
     
     [Fact]
@@ -340,9 +345,9 @@ public class IdentityTests
         var jsonContent = new StringContent(JsonConvert.SerializeObject(tokenRequest), Encoding.UTF8, "application/json");
     
         // Act
-        var response = await client.PostAsync("http://localhost:5139/api/v1/identity/refresh", jsonContent);
+        var response = await client.PostAsync("http://localhost:5248/api/v1/identity/refresh", jsonContent);
     
         // Assert
-        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
     }
 }

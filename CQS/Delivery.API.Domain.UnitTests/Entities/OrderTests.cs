@@ -3,22 +3,42 @@ namespace Delivery.API.Domain.UnitTests.Entities;
 public class OrderTests
 {
     [Fact]
-    public async Task Create_CreateOrder()
+    public async Task Create_CoefIsNull_CreateOrder()
     {
         // Arrange
-        var userId = new Guid("8d220771-aa54-4164-a361-2cc3c292fee5");
-        var pickup = Coordinate.Create(12.0d, 11.0d);
-        var dropoff = Coordinate.Create(10.0d, 9.0d);
-        var distance = Distance.FromMeters(200);
-        var cost = 23.1m;
+        var userId = Guid.NewGuid();
+        var pickup = Coordinate.Create(12.0, 11.0);
+        var dropoff = Coordinate.Create(10.0, 9.0);
+        float? distanceCoef = null;
         // Act
-        var order = Order.Create(userId, pickup, dropoff, distance, cost);
+        var order = Order.Create(userId, pickup, dropoff, distanceCoef);
 
         // Assert
-        Assert.Equal(userId, order.UserId);
-        Assert.Equal(pickup, order.Pickup);
-        Assert.Equal(dropoff, order.Dropoff);
-        Assert.Equal(distance, order.Distance);
-        Assert.Equal(cost, order.Cost);
+        using var scope = new AssertionScope();
+        order.UserId.Should().Be(userId);
+        order.Pickup.Should().Be(pickup);
+        order.Dropoff.Should().Be(dropoff);
+        order.Distance.Should().NotBeNull();
+        order.Cost.Should().BePositive();
+    }
+    
+    [Fact]
+    public async Task Create_SetCoef_CreateOrder()
+    {
+        // Arrange
+        var userId = Guid.NewGuid();
+        var pickup = Coordinate.Create(12.0, 11.0);
+        var dropoff = Coordinate.Create(10.0, 9.0);
+        float? distanceCoef = 1.8f;
+        // Act
+        var order = Order.Create(userId, pickup, dropoff, distanceCoef);
+
+        // Assert
+        using var scope = new AssertionScope();
+        order.UserId.Should().Be(userId);
+        order.Pickup.Should().Be(pickup);
+        order.Dropoff.Should().Be(dropoff);
+        order.Distance.Should().NotBeNull();
+        order.Cost.Should().BePositive();
     }
 }

@@ -12,7 +12,7 @@ public class DistanceTests
         var distance = Distance.FromMeters(meters);
         
         // Assert
-        Assert.Equal(meters, distance.Meters);
+        distance.Meters.Should().Be(meters);
     }
     
     [Fact]
@@ -21,10 +21,11 @@ public class DistanceTests
         // Arrange
         var meters = -200;
         
-        // ???
+        // Act
+        var test = () => Distance.FromMeters(meters);
         
-        // Act & Assert
-        Assert.Throws<ArgumentException>(() => Distance.FromMeters(meters));
+        //  Assert
+        test.Should().Throw<ArgumentException>();
     }
     
     [Fact]
@@ -37,7 +38,7 @@ public class DistanceTests
         var distance = Distance.FromKilometers(kilometers);
         
         // Assert
-        Assert.Equal(kilometers, distance.Kilometers);
+        distance.Kilometers.Should().Be(kilometers);
     }
     
     [Fact]
@@ -46,9 +47,24 @@ public class DistanceTests
         // Arrange
         var kilometers = -1;
         
-        // ???
+        // Act
+        var test = () => Distance.FromKilometers(kilometers);
         
-        // Act & Assert
-        Assert.Throws<ArgumentException>(() => Distance.FromKilometers(kilometers));
+        //  Assert
+        test.Should().Throw<ArgumentException>();
+    }
+    
+    [Fact]
+    public async Task CreateFromToPoints_ValidData_ReturnResult()
+    {
+        // Arrange
+        var pickup = Coordinate.Create(52.332576, 14.529904);
+        var dropoff = Coordinate.Create(52.325721, 14.516244);
+        
+        // Act
+        var distance = Distance.CreateFromToPoints(pickup, dropoff);
+        
+        //  Assert
+        distance.Meters.Should().Be(1201);
     }
 }

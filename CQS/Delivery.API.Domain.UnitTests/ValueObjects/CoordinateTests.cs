@@ -13,8 +13,9 @@ public class CoordinateTests
         var coordinate = Coordinate.Create(latitude, longitude);
         
         // Assert
-        Assert.Equal(latitude, coordinate.Latitude);
-        Assert.Equal(longitude, coordinate.Longitude);
+        using var scope = new AssertionScope();
+        coordinate.Latitude.Should().Be(latitude);
+        coordinate.Longitude.Should().Be(longitude);
     }
     
     [Fact]
@@ -24,10 +25,11 @@ public class CoordinateTests
         var latitude = -91d;
         var longitude = 2.2d;
         
-        // ????
+        // Act
+        var test = () => Coordinate.Create(latitude, longitude);
         
-        // Act & Assert
-        Assert.Throws<ArgumentException>(() => Coordinate.Create(latitude, longitude));
+        // Assert
+        test.Should().Throw<ArgumentException>();
     }
     
     [Fact]
@@ -37,9 +39,10 @@ public class CoordinateTests
         var latitude = 2.2d;
         var longitude = 181d;
         
-        // ????
+        // Act
+        var test = () => Coordinate.Create(latitude, longitude);
         
-        // Act & Assert
-        Assert.Throws<ArgumentException>(() => Coordinate.Create(latitude, longitude));
+        // Assert
+        test.Should().Throw<ArgumentException>();
     }
 }

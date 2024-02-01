@@ -6,7 +6,7 @@ public class UserTests
     public async Task Create_CreateUser()
     {
         // Arrange
-        var userId = new Guid("8d220771-aa54-4164-a361-2cc3c292fee5");
+        var userId = Guid.NewGuid();
         var username = "username";
         var password = "password";
         var accessToken = "accessToken";
@@ -16,18 +16,19 @@ public class UserTests
         var user = User.Create(userId, username, password, accessToken, refreshToken);
 
         // Assert
-        Assert.Equal(userId, user.UserId);
-        Assert.Equal(username, user.Username);
-        Assert.Equal(password, user.Password);
-        Assert.Equal(accessToken, user.AccessToken);
-        Assert.Equal(refreshToken, user.RefreshToken);
+        using var scope = new AssertionScope();
+        user.UserId.Should().Be(userId);
+        user.Username.Should().Be(username);
+        user.Password.Should().Be(password);
+        user.AccessToken.Should().Be(accessToken);
+        user.RefreshToken.Should().Be(refreshToken);
     }
 
     [Fact]
     public async Task UpdateAccessToken_UpdateToken()
     {
         // Arrange
-        var userId = new Guid("8d220771-aa54-4164-a361-2cc3c292fee5");
+        var userId = Guid.NewGuid();
         var test = "test";
         var newToken = "newToken";
         var user = User.Create(userId, test, test, test, test);
@@ -36,6 +37,6 @@ public class UserTests
         user.UpdateAccessToken(newToken);
         
         // Assert
-        Assert.Equal(newToken, user.AccessToken);
+        user.AccessToken.Should().Be(newToken);
     }
 }
