@@ -1,6 +1,7 @@
 using System.IdentityModel.Tokens.Jwt;
+using Delivery.API.Application.Service;
 
-namespace Delivery.API.Application.UnitTests.Services;
+namespace Delivery.API.Domain.UnitTests.Service;
 
 public class GenerateTokenTests
 {
@@ -22,14 +23,12 @@ public class GenerateTokenTests
         var jwt = handler.ReadToken(token) as JwtSecurityToken;
 
         // Assert
-        Assert.Multiple(() =>
-        {
-            Assert.NotNull(token);
-            Assert.NotNull(jwt);
-            Assert.True(jwt.Claims.Any(claim => claim.Type == "creatorId" && claim.Value == userId.ToString()));
-        });
+        using var scope = new AssertionScope();
+        token.Should().NotBeNull();
+        jwt.Should().NotBeNull();
+        jwt.Claims.Any(claim => claim.Type == "creatorId" && claim.Value == userId.ToString()).Should().BeTrue();
     }
-    
+
     [Fact]
     public async Task Generate_WithSettingsSecretKey_GenerateAccessToken()
     {
@@ -44,10 +43,6 @@ public class GenerateTokenTests
         var refreshToken = generateToken.RefreshToken();
 
         // Assert
-        Assert.Multiple(() =>
-        {
-            Assert.NotNull(refreshToken);
-            Assert.NotEmpty(refreshToken);
-        });
+        refreshToken.Should().NotBeNullOrEmpty();
     }
 }

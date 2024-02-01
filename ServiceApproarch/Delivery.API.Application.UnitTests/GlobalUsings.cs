@@ -1,5 +1,5 @@
 global using Xunit;
-global  using Delivery.API.Application.Dto;
+global using Delivery.API.Application.Dto;
 global using Delivery.API.Application.Services;
 global using Delivery.API.Application.Settings;
 global using Delivery.API.Application.UnitTests.FakeRepositories;

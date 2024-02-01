@@ -1,5 +1,5 @@
 using Delivery.API.Application.Interfaces;
-using Delivery.API.Application.Services;
+using Delivery.API.Application.Service;
 using Delivery.API.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 

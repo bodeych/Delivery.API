@@ -1,6 +1,8 @@
 using Delivery.API.Application.Commands;
 using Delivery.API.Controllers.Contracts.Requests;
 using Delivery.API.Controllers.Contracts.Responses;
+using Delivery.API.Controllers.Validators;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
 
@@ -20,20 +22,7 @@ namespace Delivery.API.Controllers;
          [HttpPost("login")]
          public async Task<IActionResult> LoginUser([FromBody]UserLoginRequest request, CancellationToken cancellationToken)
          {
-             if (request is null)
-             {
-                 return BadRequest("Request body is invalid or empty.");
-             }
-    
-             if (request.Username is null)
-             {
-                 return BadRequest("Username is invalid or empty.");
-             }
-    
-             if (request.Password is null)
-             {
-                 return BadRequest("Password is invalid or empty.");
-             }
+             new UserLoginRequestValidator().ValidateAndThrow(request);
     
              var loginCommand = new LoginUserCommand()
                  {
@@ -60,20 +49,7 @@ namespace Delivery.API.Controllers;
          [HttpPost("registration")]
          public async Task<IActionResult> RegistrationUser([FromBody]UserRegistrationRequest request, CancellationToken cancellationToken)
          {
-             if (request is null)
-             {
-                 return BadRequest("Request body is invalid or empty.");
-             }
-    
-             if (request.Username is null)
-             {
-                 return BadRequest("Username is invalid or empty.");
-             }
-    
-             if (request.Password is null)
-             {
-                 return BadRequest("Password is invalid or empty.");
-             }
+             new UserRegistrationRequestValidator().ValidateAndThrow(request);
              
              var registrationCommand = new RegistrationUserCommand
              {
@@ -94,20 +70,7 @@ namespace Delivery.API.Controllers;
          [HttpPost("refresh")]
          public async Task<IActionResult> Refresh([FromBody]TokenRefreshRequest request, CancellationToken cancellationToken)
          {
-             if (request is null)
-             {
-                 return BadRequest("Request body is invalid or empty.");
-             }
-    
-             if (request.AccessToken is null)
-             {
-                 return BadRequest("Access Token is invalid or empty.");
-             }
-    
-             if (request.RefreshToken is null)
-             {
-                 return BadRequest("Refresh Token is invalid or empty.");
-             }
+             new TokenRefreshRequestValidator().ValidateAndThrow(request);
              
              var tokenCommand = new RefreshAccessTokenCommand
              {

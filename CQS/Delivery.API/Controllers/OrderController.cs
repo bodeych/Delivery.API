@@ -4,7 +4,9 @@ using Delivery.API.Application.Queries;
 using Delivery.API.Controllers.Contracts.Requests;
 using Delivery.API.Controllers.Contracts.Responses;
 using Delivery.API.Controllers.Contracts.Shared;
+using Delivery.API.Controllers.Validators;
 using Delivery.API.ServiceCollectionExtensions;
+using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -27,20 +29,7 @@ public class OrderController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreatorOrder([FromBody] CreateOrderRequest request, CancellationToken cancellationToken)
     {
-        if (request is null)
-        {
-            return BadRequest("Request body is invalid or empty.");
-        }
-
-        if (request.Pickup is null)
-        {
-            return BadRequest("Pickup coordinate is invalid or empty.");
-        }
-
-        if (request.Dropoff is null)
-        {
-            return BadRequest("Dropoff coordinate is invalid or empty.");
-        }
+        new CreateOrderRequestValidator().ValidateAndThrow(request);
 
         try
         {
@@ -78,10 +67,7 @@ public class OrderController : ControllerBase
     [HttpGet("{orderId:guid}")]
     public async Task<IActionResult> GetById([FromRoute] Guid orderId, CancellationToken cancellationToken)
     {
-        if (orderId == Guid.Empty)
-        {
-            return BadRequest("Requested ID is invalid or empty.");
-        }
+        new GuidRequestValidator().ValidateAndThrow(orderId);
 
         var idOrderDetailsQuery = new GetOrderDetailsQuery
         {
@@ -119,10 +105,7 @@ public class OrderController : ControllerBase
     [HttpDelete("{orderId:guid}")]
     public async Task<IActionResult> DeleteById([FromRoute] Guid orderId, CancellationToken cancellationToken)
     {
-        if (orderId == Guid.Empty)
-        {
-            return BadRequest("Requested ID is invalid or empty.");
-        }
+        new GuidRequestValidator().ValidateAndThrow(orderId);
 
         var deleteOrderCommand = new DeleteOrderCommand
         {

@@ -5,7 +5,7 @@ using System.Text;
 using Delivery.API.Application.Settings;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Delivery.API.Application.Services;
+namespace Delivery.API.Application.Service;
 
 public sealed class GenerateToken
 {

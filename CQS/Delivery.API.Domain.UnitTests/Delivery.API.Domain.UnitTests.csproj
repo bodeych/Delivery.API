@@ -24,7 +24,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Delivery.API.Domain\Delivery.API.Domain.csproj" />
+      <ProjectReference Include="..\Delivery.API.Application\Delivery.API.Application.csproj" />
     </ItemGroup>
 
 </Project>

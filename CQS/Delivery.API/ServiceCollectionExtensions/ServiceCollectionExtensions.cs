@@ -1,6 +1,6 @@
 using System.Text;
 using Delivery.API.Application.Interfaces;
-using Delivery.API.Application.Services;
+using Delivery.API.Application.Service;
 using Delivery.API.Application.Settings;
 using Delivery.API.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -15,7 +15,6 @@ namespace Delivery.API.ServiceCollectionExtensions;
 
 public static class ServiceCollectionExtensions
 {
-    
     public static IServiceCollection AddInfrastructure(this IServiceCollection services)
     {
         services.AddDbContext<DataContext>((sp, options) =>
